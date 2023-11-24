@@ -42,6 +42,14 @@ function App() {
 		console.log(`Name: ${name}, Age: ${age}, Country: ${country}, Position: ${position} and Wage: ${wage}.`);
 	};
 
+	const deleteEmployee = (id) => {
+		// alert('Employee Delete!');
+		Axios.delete(`http://localhost:3001/employees/${id}`).then((response) => {
+			setEmployeeList(employeeList.filter((employee) => employee.id !== id));
+			console.log(response.data);
+		});
+	};
+
 	return (
 		<>
 		  <div className="App">
@@ -75,15 +83,15 @@ function App() {
 
 				{employeeList.map((val, key) => {
 					return(
-						<>
-						<div className='employee' key={key}> 
-							<h3>Name: {val.name} </h3>
-							<h3>Age: {val.age} </h3>
-							<h3>Country: {val.country} </h3>
-							<h3>Position: {val.position} </h3>
-							<h3>Wage: {val.wage} </h3>
-						</div>
-						</>
+							<div className='employee' key={key}> 
+								<h3>ID: {val.id}</h3>
+								<h3>Name: {val.name} </h3>
+								<h3>Age: {val.age} </h3>
+								<h3>Country: {val.country} </h3>
+								<h3>Position: {val.position} </h3>
+								<h3>Wage: {val.wage} </h3>
+								<button onClick={() => deleteEmployee(val.id)}>Delete</button>
+							</div>
 					)
 				})}
 

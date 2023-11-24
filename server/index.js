@@ -39,6 +39,23 @@ app.get('/employees', (req, res) => {
             console.log(err);
         }else{
             res.send(result);
+            console.log("Results fetched successfully");
+        }
+    });
+});
+
+app.delete('/employees/:id', (req, res) => {
+    const employeeId = req.params.id;
+
+    db.query('DELETE FROM employees WHERE id = ?', employeeId, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error deleting employee");
+        } else if (result.affectedRows === 0) {
+            res.status(404).send("Employee not found");
+        } else {
+            res.send("Employee deleted successfully");
+            console.log("Employee deleted successfully");
         }
     });
 });
